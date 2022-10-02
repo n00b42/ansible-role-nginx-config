@@ -13,4 +13,5 @@
     path: "{{ item }}"
     state: absent
   loop: "{{ nginx_config_files.results | map(attribute='files') | sum(start=[]) | map(attribute='path') | list + nginx_config_cleanup_files | default('') | list }}"
+  when: nginx_config_cleanup_paths is defined
   notify: (Handler - NGINX Config) Run NGINX
